@@ -24,8 +24,8 @@ const fetchCountriesSearch = new CountrySearch(); //! class
 refs.input.addEventListener('input', debounce(onInputChange, DEBOUNCE_DELAY))
 
 function onInputChange(e) {
+    e.preventDefault();
     const userInput = e.target.value
-
     console.log(userInput);
     if (e.target.value === '') {
         clearAppendCountryList()
@@ -33,33 +33,47 @@ function onInputChange(e) {
     }
 
     fetchCountriesSearch.query = userInput.trim();
-    fetchCountriesSearch.fetchCountries()
+    fetchCountriesSearch.fetchCountries() //! returns response.jason()
         .then(countries => {
             console.log(countries);
-            if (countries.length > 10) {
-                Notify.info('Too many matches found. Please enter a more specific name.');
+            if (countries.length >= 10) {
+                Notify.info('Too many matches found. Please enter a more specific name.', {
+                    width: '500px',
+                    fontSize: '20px',
+                    timeout: '3000',
+                    position: 'center-top',
+                })
                 clearAppendCountryList()
                 return countries
             }
+            return countries
         })
         .then(countries => {
-            if (1 < countries.length && countries.length < 10) {
+            if (2 <= countries.length && countries.length <= 10) {
                 clearAppendCountryList()
                 appendCountryList(countries)
                 return countries
             }
+            return countries
         })
         .then(countries => {
             if (countries.length === 1) {
                 clearAppendCountryList()
                 appendCountry(countries)
-                return
+                return countries
             }
+            return countries
         })
-        .catch(() => {
-            Notify.warning('Oops, there is no country with that name')
-            clearAppendCountryList()
-            return
+        .then(countries => {
+            if (countries.status === 404 && countries.message === 'Not Found') {
+                Notify.warning('Oops, there is no country with that name', {
+                    width: '500px',
+                    fontSize: '20px',
+                    timeout: '3000',
+                    position: 'center-top',
+                })
+                clearAppendCountryList()
+            }
         })
 }
 // .then(countries => {
@@ -82,6 +96,7 @@ function appendCountryList(countries) {
 
 function clearAppendCountryList() {
     refs.countryList.innerHTML = ''
+    refs.countryInfo.innerHTML = ''
 }
 
 function appendCountry(countries) {

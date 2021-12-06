@@ -83,3 +83,6 @@ h1 {
 li {
   display: flex;
 }
+.country-info-leng:not(:last-child):after {
+  content: ',\00a0';
+}

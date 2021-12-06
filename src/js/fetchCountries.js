@@ -33,6 +33,12 @@ export default class CountrySearch {
         const urlCountry = `${BASE_URL}${this.searchQuery}?fields=${filters.country},${filters.capital},${filters.population},${filters.flag},${filters.languages}`
         console.log(urlCountry);
         return fetch(urlCountry)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.status);
+                }
+                return response
+            })
             .then(response => response.json())
             .then((countries) => {
                 return countries; //! change this line to console.log(countries), this line returns array
@@ -48,14 +54,19 @@ export default class CountrySearch {
         console.log(typeof countries);
         if (countries.length > 10) {
             console.log('length > 10');
-            Notify.info('Too many matches found. Please enter a more specific name.');
+            Notify.info('Too many matches found. Please enter a more specific name.', {
+                width: '500px',
+                fontSize: '20px',
+                timeout: '3000',
+                position: 'center-top',
+            })
             return
         }
         console.log('length < 10');
         return countries
     }
     testLength2(countries) { //! test from 2 to 10
-        if (2 > countries.length || countries.length > 10) {
+        if (2 > countries.length) {
             return console.log('wrong data');
         }
         return countries
