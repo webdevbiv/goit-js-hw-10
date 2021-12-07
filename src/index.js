@@ -25,7 +25,7 @@ function onInputChange(e) {
     const userInput = e.target.value
     console.log(userInput);
     if (userInput === '') {
-        clearAppendHTML()
+        clearAdjacentHTML()
         return
     }
 
@@ -55,25 +55,25 @@ function onInputChange(e) {
 function test1(countries) {
     if (countries.length >= 10) {
         Notify.info('Too many matches found. Please enter a more specific name.', refs.notifyOptions)
-        clearAppendHTML()
+        clearAdjacentHTML()
     }
 }
 function test2(countries) {
     if (2 <= countries.length && countries.length <= 10) {
-        clearAppendHTML()
+        clearAdjacentHTML()
         appendCountryList(countries)
     }
 }
 function test3(countries) {
     if (countries.length === 1) {
-        clearAppendHTML()
+        clearAdjacentHTML()
         appendCountry(countries)
     }
 }
 function test4(countries) {
     if (countries.status === 404 && countries.message === 'Not Found') {
         Notify.warning('Oops, there is no country with that name', refs.notifyOptions)
-        clearAppendHTML()
+        clearAdjacentHTML()
     }
 }
 //! utility functions
@@ -81,7 +81,7 @@ function appendCountryList(countries) {
     refs.countryList.insertAdjacentHTML('beforeend', countriesListTpl(countries))
 }
 
-function clearAppendHTML() {
+function clearAdjacentHTML() {
     refs.countryList.innerHTML = ''
     refs.countryInfo.innerHTML = ''
 }
