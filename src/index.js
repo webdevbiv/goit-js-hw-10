@@ -24,8 +24,7 @@ function onInputChange(e) {
     e.preventDefault();
     const userInput = e.target.value
     console.log(userInput);
-
-    if (e.target.value === '') {
+    if (userInput === '') {
         clearAppendHTML()
         return
     }
