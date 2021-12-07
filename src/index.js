@@ -10,6 +10,12 @@ const refs = {
     countryList: document.querySelector('.country-list'),
     countryInfo: document.querySelector('.country-info'),
     // debounce: require('lodash.debounce')
+    notifyOptrions: {
+        width: '500px',
+        fontSize: '20px',
+        timeout: '3000',
+        position: 'center-top',
+    }
 }
 const debounce = require('lodash.debounce');
 const DEBOUNCE_DELAY = 300;
@@ -37,12 +43,7 @@ function onInputChange(e) {
         .then(countries => {
             console.log(countries);
             if (countries.length >= 10) {
-                Notify.info('Too many matches found. Please enter a more specific name.', {
-                    width: '500px',
-                    fontSize: '20px',
-                    timeout: '3000',
-                    position: 'center-top',
-                })
+                Notify.info('Too many matches found. Please enter a more specific name.', refs.notifyOptrions)
                 clearAppendCountryList()
                 return countries
             }
@@ -66,12 +67,7 @@ function onInputChange(e) {
         })
         .then(countries => {
             if (countries.status === 404 && countries.message === 'Not Found') {
-                Notify.warning('Oops, there is no country with that name', {
-                    width: '500px',
-                    fontSize: '20px',
-                    timeout: '3000',
-                    position: 'center-top',
-                })
+                Notify.warning('Oops, there is no country with that name', refs.notifyOptrions)
                 clearAppendCountryList()
             }
         })
@@ -102,9 +98,5 @@ function clearAppendCountryList() {
 function appendCountry(countries) {
     refs.countryList.insertAdjacentHTML('beforeend', countryTpl(countries))
 }
-
-// function handleError(err, countries) {
-//     Notify.warning('Oops, there is no country with that name');
-// }
 
 
