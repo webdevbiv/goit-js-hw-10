@@ -60,6 +60,7 @@ function test1(countries) {
 }
 function test2(countries) {
     if (2 <= countries.length && countries.length <= 10) {
+        countries.reverse()
         clearAdjacentHTML()
         createMarkupList(countries)
     }
