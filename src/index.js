@@ -61,13 +61,13 @@ function test1(countries) {
 function test2(countries) {
     if (2 <= countries.length && countries.length <= 10) {
         clearAdjacentHTML()
-        appendCountryList(countries)
+        createMarkupList(countries)
     }
 }
 function test3(countries) {
     if (countries.length === 1) {
         clearAdjacentHTML()
-        appendCountry(countries)
+        createMarkup(countries)
     }
 }
 function test4(countries) {
@@ -77,7 +77,7 @@ function test4(countries) {
     }
 }
 //! utility functions
-function appendCountryList(countries) {
+function createMarkupList(countries) {
     refs.countryList.insertAdjacentHTML('beforeend', countriesListTpl(countries))
 }
 
@@ -86,7 +86,7 @@ function clearAdjacentHTML() {
     refs.countryInfo.innerHTML = ''
 }
 
-function appendCountry(countries) {
+function createMarkup(countries) {
     refs.countryList.insertAdjacentHTML('beforeend', countryTpl(countries))
 }
 
