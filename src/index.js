@@ -42,55 +42,64 @@ function onInputChange(e) {
     fetchCountriesSearch.fetchCountries() //! returns response.jason()
         .then(countries => {
             console.log(countries);
-            if (countries.length >= 10) {
-                Notify.info('Too many matches found. Please enter a more specific name.', refs.notifyOptrions)
-                clearAppendCountryList()
-                return countries
-            }
+            test1(countries)
             return countries
         })
         .then(countries => {
-            if (2 <= countries.length && countries.length <= 10) {
-                clearAppendCountryList()
-                appendCountryList(countries)
-                return countries
-            }
+            test2(countries)
             return countries
         })
         .then(countries => {
-            if (countries.length === 1) {
-                clearAppendCountryList()
-                appendCountry(countries)
-                return countries
-            }
+            test3(countries)
             return countries
         })
         .then(countries => {
-            if (countries.status === 404 && countries.message === 'Not Found') {
-                Notify.warning('Oops, there is no country with that name', refs.notifyOptrions)
-                clearAppendCountryList()
-            }
+            test4(countries)
+        })
+        .catch((e) => {
+            console.log(e);
         })
 }
-// .then(countries => {
-//     console.log(countries);
-//     if (countries.message = 'Not Found') {
-//         Notify.warning('Oops, there is no country with that name');
-//         clearAppendCountryList()
-//         return
-//     }
-// })
-//         .catch((err) => {
-//             Notify.warning('Oops, there is no country with that name');
-//             clearAppendCountryList()
-//         });
 
+function test1(countries) {
+    if (countries.length >= 10) {
+        Notify.info('Too many matches found. Please enter a more specific name.', refs.notifyOptrions)
+        clearAppendHTML()
+        return countries
+    }
+    return countries
+}
+
+function test2(countries) {
+    if (2 <= countries.length && countries.length <= 10) {
+        clearAppendHTML()
+        appendCountryList(countries)
+        return countries
+    }
+    return countries
+}
+
+function test3(countries) {
+    if (countries.length === 1) {
+        clearAppendHTML()
+        appendCountry(countries)
+        return countries
+    }
+    return countries
+}
+
+function test4(countries) {
+    if (countries.status === 404 && countries.message === 'Not Found') {
+        Notify.warning('Oops, there is no country with that name', refs.notifyOptrions)
+        clearAppendHTML()
+    }
+}
 
 function appendCountryList(countries) {
     refs.countryList.insertAdjacentHTML('beforeend', countriesListTpl(countries))
 }
 
-function clearAppendCountryList() {
+function clearAppendHTML() {
     refs.countryList.innerHTML = ''
     refs.countryInfo.innerHTML = ''
 }
@@ -98,5 +107,6 @@ function clearAppendCountryList() {
 function appendCountry(countries) {
     refs.countryList.insertAdjacentHTML('beforeend', countryTpl(countries))
 }
+
 
 

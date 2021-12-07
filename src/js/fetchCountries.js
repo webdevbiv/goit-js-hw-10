@@ -36,4 +36,12 @@ export default class CountrySearch {
     set query(value) {
         this.searchQuery = value
     }
+    test1(countries) {
+        if (countries.length >= 10) {
+            Notify.info('Too many matches found. Please enter a more specific name.', refs.notifyOptrions)
+            // clearAppendHTML()
+            return countries
+        }
+        return countries
+    }
 }
