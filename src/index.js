@@ -7,7 +7,7 @@ const refs = {
     input: document.querySelector('#search-box'),
     countryList: document.querySelector('.country-list'),
     countryInfo: document.querySelector('.country-info'),
-    notifyOptrions: {
+    notifyOptions: {
         width: '500px',
         fontSize: '20px',
         timeout: '1500',
@@ -55,7 +55,7 @@ function onInputChange(e) {
 //! tests functions
 function test1(countries) {
     if (countries.length >= 10) {
-        Notify.info('Too many matches found. Please enter a more specific name.', refs.notifyOptrions)
+        Notify.info('Too many matches found. Please enter a more specific name.', refs.notifyOptions)
         clearAppendHTML()
     }
 }
@@ -73,7 +73,7 @@ function test3(countries) {
 }
 function test4(countries) {
     if (countries.status === 404 && countries.message === 'Not Found') {
-        Notify.warning('Oops, there is no country with that name', refs.notifyOptrions)
+        Notify.warning('Oops, there is no country with that name', refs.notifyOptions)
         clearAppendHTML()
     }
 }
