@@ -12,13 +12,14 @@ const refs = {
         fontSize: '20px',
         timeout: '1500',
         position: 'right-top',
-    }
+    },
+    DEBOUNCE_DELAY: 300
 }
+
 const debounce = require('lodash.debounce');
-const DEBOUNCE_DELAY = 300;
 const fetchCountriesSearch = new CountrySearch(); //! class
 
-refs.input.addEventListener('input', debounce(onInputChange, DEBOUNCE_DELAY))
+refs.input.addEventListener('input', debounce(onInputChange, refs.DEBOUNCE_DELAY))
 
 function onInputChange(e) {
     e.preventDefault();
