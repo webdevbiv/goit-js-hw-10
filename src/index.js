@@ -52,14 +52,11 @@ function test1(countries) {
 }
 function test2(countries) {
     if (2 <= countries.length && countries.length <= 10) {
-        clearAdjacentHTML()
-        countries.reverse()
         createMarkup(countries, refs.countryList, countriesListTpl)
     }
 }
 function test3(countries) {
     if (countries.length === 1) {
-        clearAdjacentHTML()
         createMarkup(countries, refs.countryInfo, countryTpl)
     }
 }
@@ -74,6 +71,7 @@ function error(er) {
 }
 //! utility functions
 function createMarkup(countries, element, template) {
+    clearAdjacentHTML()
     element.insertAdjacentHTML('beforeend', template(countries))
 }
 
