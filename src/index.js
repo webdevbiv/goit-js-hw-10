@@ -11,7 +11,6 @@ const refs = {
         width: '500px',
         fontSize: '20px',
         timeout: '1500',
-        position: 'right-top',
     },
     DEBOUNCE_DELAY: 300
 }
