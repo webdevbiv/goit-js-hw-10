@@ -46,8 +46,7 @@ function testUserInput(countries) {
 
 function test1(countries) {
     if (countries.length >= 10) {
-        clearAdjacentHTML()
-        Notify.info('Too many matches found. Please enter a more specific name.', refs.notifyOptions)
+        notify(Notify.info, 'Too many matches found.Please enter a more specific name.')
     }
 }
 function test2(countries) {
@@ -62,8 +61,7 @@ function test3(countries) {
 }
 function test4(countries) {
     if (countries.status === 404 && countries.message === 'Not Found') {
-        clearAdjacentHTML()
-        Notify.warning('Oops, there is no country with that name', refs.notifyOptions)
+        notify(Notify.warning, 'Oops, there is no country with that name')
     }
 }
 function error(er) {
@@ -78,6 +76,11 @@ function createMarkup(countries, element, template) {
 function clearAdjacentHTML() {
     refs.countryList.innerHTML = ''
     refs.countryInfo.innerHTML = ''
+}
+
+function notify(type, message) {
+    clearAdjacentHTML()
+    type(message, refs.notifyOptions)
 }
 
 
