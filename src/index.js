@@ -11,7 +11,7 @@ const refs = {
         width: '500px',
         fontSize: '20px',
         timeout: '1500',
-        position: 'center-top',
+        position: 'right-top',
     }
 }
 const debounce = require('lodash.debounce');
@@ -22,64 +22,58 @@ refs.input.addEventListener('input', debounce(onInputChange, DEBOUNCE_DELAY))
 
 function onInputChange(e) {
     e.preventDefault();
-    const userInput = e.target.value
+    const userInput = e.target.value.trim()
     console.log(userInput);
     if (userInput === '') {
         clearAdjacentHTML()
         return
     }
 
-    fetchCountriesSearch.query = userInput.trim();
+    fetchCountriesSearch.query = userInput;
     fetchCountriesSearch.fetchCountries() //! returns response.jason()
-        .then(countries => {
-            console.log(countries);
-            test1(countries)
-            return countries
-        })
-        .then(countries => {
-            test2(countries)
-            return countries
-        })
-        .then(countries => {
-            test3(countries)
-            return countries
-        })
-        .then(countries => {
-            test4(countries)
-        })
-        .catch((e) => {
-            console.log(e);
-        })
+        .then(testUserInput)
+        .catch(error)
 }
+
 //! tests functions
+function testUserInput(countries) {
+    test1(countries)
+    test2(countries)
+    test3(countries)
+    test4(countries)
+}
+
 function test1(countries) {
     if (countries.length >= 10) {
-        Notify.info('Too many matches found. Please enter a more specific name.', refs.notifyOptions)
         clearAdjacentHTML()
+        Notify.info('Too many matches found. Please enter a more specific name.', refs.notifyOptions)
     }
 }
 function test2(countries) {
     if (2 <= countries.length && countries.length <= 10) {
-        countries.reverse()
         clearAdjacentHTML()
-        createMarkupList(countries)
+        countries.reverse()
+        createMarkup(countries, refs.countryList, countriesListTpl)
     }
 }
 function test3(countries) {
     if (countries.length === 1) {
         clearAdjacentHTML()
-        createMarkup(countries)
+        createMarkup(countries, refs.countryInfo, countryTpl)
     }
 }
 function test4(countries) {
     if (countries.status === 404 && countries.message === 'Not Found') {
-        Notify.warning('Oops, there is no country with that name', refs.notifyOptions)
         clearAdjacentHTML()
+        Notify.warning('Oops, there is no country with that name', refs.notifyOptions)
     }
 }
+function error(er) {
+    console.log(er);
+}
 //! utility functions
-function createMarkupList(countries) {
-    refs.countryList.insertAdjacentHTML('beforeend', countriesListTpl(countries))
+function createMarkup(countries, element, template) {
+    element.insertAdjacentHTML('beforeend', template(countries))
 }
 
 function clearAdjacentHTML() {
@@ -87,9 +81,7 @@ function clearAdjacentHTML() {
     refs.countryInfo.innerHTML = ''
 }
 
-function createMarkup(countries) {
-    refs.countryList.insertAdjacentHTML('beforeend', countryTpl(countries))
-}
+
 
 
 
